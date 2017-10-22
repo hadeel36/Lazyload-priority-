@@ -1,0 +1,14 @@
+<div class="main">
+    <div style="display: block" *ngFor="let chart of charts">
+        <canvas baseChart
+                [datasets]="chart.barChartData"
+                [labels]="chart.barChartLabels"
+                [options]="chart.barChartOptions"
+                [legend]="chart.barChartLegend"
+                [chartType]="chart.barChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+        </canvas>
+    </div>
+    <button (click)="randomize()">Update</button>
+</div>
