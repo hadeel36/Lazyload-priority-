@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { OffersService } from './app.service';
+import { ChartsService } from './app.service';
 import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { ChartsModule } from 'ng2-charts';
     HttpModule,
     ChartsModule
   ],
-  providers: [ OffersService ],
+  providers: [ ChartsService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

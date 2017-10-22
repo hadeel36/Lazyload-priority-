@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 
 @Injectable()
-export class OffersService {
+export class ChartsService {
 
     constructor(private _http:Http) {}
 
@@ -13,7 +13,7 @@ export class OffersService {
     * Get all offers method
     * @returns {Observable<Response>}
     */
-    getAllOffers(): Observable<Response> {
+    getAllCharts(): Observable<Response> {
         return this._http.get('/charts').map(data => data.json());
     }
 }

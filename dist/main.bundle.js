@@ -54,19 +54,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var AppComponent = (function () {
-    // public barChartOptions:any = {
-    //     scaleShowVerticalLines: false,
-    //     responsive: true
-    //   };
-    //   public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-    //   public barChartType:string = 'bar';
-    //   public barChartLegend:boolean = true;
-    //   public barChartData:any[] = [
-    //     {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    //     {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-    //   ];
-    function AppComponent(_allOffers) {
-        this._allOffers = _allOffers;
+    function AppComponent(_allCharts) {
+        this._allCharts = _allCharts;
         //Get all charts
         this.charts = [];
         this.charts = [{ barChartLabels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
@@ -83,6 +72,12 @@ var AppComponent = (function () {
                     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
                 ] }];
     }
+    AppComponent.prototype.ngOnInit = function () {
+        this._allCharts.getAllCharts().subscribe(function (data) {
+            console.log('hello');
+            console.log(data);
+        });
+    };
     // events
     AppComponent.prototype.chartClicked = function (e) {
         console.log(e);
@@ -98,7 +93,7 @@ AppComponent = __decorate([
         template: __webpack_require__(468),
         styles: [__webpack_require__(464)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* OffersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* OffersService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* ChartsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* ChartsService */]) === "function" && _a || Object])
 ], AppComponent);
 
 var _a;
@@ -148,7 +143,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_6_ng2_charts__["ChartsModule"]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* OffersService */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* ChartsService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -469,7 +464,7 @@ module.exports = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(471);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OffersService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChartsService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -482,23 +477,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var OffersService = (function () {
-    function OffersService(_http) {
+var ChartsService = (function () {
+    function ChartsService(_http) {
         this._http = _http;
     }
     /**
     * Get all offers method
     * @returns {Observable<Response>}
     */
-    OffersService.prototype.getAllOffers = function () {
-        return this._http.get('/offers').map(function (data) { return data.json(); });
+    ChartsService.prototype.getAllCharts = function () {
+        return this._http.get('/charts').map(function (data) { return data.json(); });
     };
-    return OffersService;
+    return ChartsService;
 }());
-OffersService = __decorate([
+ChartsService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
-], OffersService);
+], ChartsService);
 
 var _a;
 //# sourceMappingURL=/Users/hadeelkhawaledeh/Public/baaz/Lazyload-priority-/src/app.service.js.map

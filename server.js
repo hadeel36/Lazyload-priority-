@@ -1,15 +1,29 @@
 
 var express = require('express');
 var app = express();
+var fs = require('fs');
 
 var request = require('request');
 var path = require('path');
 
-const offersUrl = 'https://offersvc.expedia.com/offers/v2/getOffers?scenario=deal-finder&page=foo&uid=foo&productType=Hotel';
-
 //use built in middleware to serve static files
 app.use(express.static(path.join(__dirname,'dist')));
 
+/**
+ * Get offers body
+ *
+ * @param req
+ * @param res
+ * @returns {JSONObject}
+ */
+app.get('/charts', function(req, res) {
+  	var obj;
+  	fs.readFile('./charts-data.json', function (err, data) {
+  	  if (err) throw err;
+  	  obj = data.toString();
+  	  res.json(obj);
+  	});
+});
 
 //set express to listen for requests
 var port = process.env.PORT || 5000;
