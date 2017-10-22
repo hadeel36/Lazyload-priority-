@@ -1,4 +1,4 @@
-<div class="main">
+<div class="charts-comp">
     <div style="display: block" *ngFor="let chart of charts">
         <canvas baseChart
                 [datasets]="chart.barChartData"
@@ -10,5 +10,5 @@
                 (chartClick)="chartClicked($event)">
         </canvas>
     </div>
-    <button (click)="randomize()">Update</button>
+    <button class="charts-comp__btn"></button>
 </div>

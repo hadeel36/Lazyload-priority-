@@ -58,25 +58,24 @@ var AppComponent = (function () {
         this._allCharts = _allCharts;
         //Get all charts
         this.charts = [];
-        this.charts = [{ barChartLabels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-                barChartType: 'bar',
-                barChartLegend: true,
-                barChartData: [
-                    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-                    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-                ] }, { barChartLabels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-                barChartType: 'bar',
-                barChartLegend: true,
-                barChartData: [
-                    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-                    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-                ] }];
     }
     AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this._allCharts.getAllCharts().subscribe(function (data) {
-            console.log('hello');
             console.log(data);
+            _this.charts = data['data'];
+            _this.next = data['next'];
         });
+    };
+    AppComponent.prototype.onWindowScroll = function () {
+        var _this = this;
+        var number = window.scrollY;
+        if (this.next && number > 50) {
+            this._allCharts.getAllCharts(this.next).subscribe(function (data) {
+                _this.charts = _this.charts.concat(data['data']);
+                _this.next = data['next'];
+            });
+        }
     };
     // events
     AppComponent.prototype.chartClicked = function (e) {
@@ -87,6 +86,12 @@ var AppComponent = (function () {
     };
     return AppComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:scroll', []),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppComponent.prototype, "onWindowScroll", null);
 AppComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-root',
@@ -177,7 +182,7 @@ exports = module.exports = __webpack_require__(81)();
 
 
 // module
-exports.push([module.i, ".main {\n\tmargin: 3%;\n}\n\n.main__img {\n\ttext-align: center;\n}\n\n.main__img img {\n\twidth: 61%;\n\theight: auto;\n}\n\n.main__text {\n\tz-index: 400;\n\ttext-align: center;\n\tposition: absolute;\n\ttop: 20%;\n\tleft: 43%;\n\tfont-size: 23px;\n\ttext-transform: capitalize;\n\tfont-weight: bold;\n\tcolor: gray;\n\tbackground-color: #ddd;\n}\n\n.main__offer-img {\n\twidth: 100%;\n}", ""]);
+exports.push([module.i, ".charts-comp {\n\tmargin: 17%;\n}\n\n.charts-comp__btn {\n\tdisplay: none;\n}", ""]);
 
 // exports
 
@@ -444,7 +449,7 @@ webpackContext.id = 465;
 /***/ 468:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main\">\n    <div style=\"display: block\" *ngFor=\"let chart of charts\">\n        <canvas baseChart\n                [datasets]=\"chart.barChartData\"\n                [labels]=\"chart.barChartLabels\"\n                [options]=\"chart.barChartOptions\"\n                [legend]=\"chart.barChartLegend\"\n                [chartType]=\"chart.barChartType\"\n                (chartHover)=\"chartHovered($event)\"\n                (chartClick)=\"chartClicked($event)\">\n        </canvas>\n    </div>\n    <button (click)=\"randomize()\">Update</button>\n</div>\n"
+module.exports = "<div class=\"charts-comp\">\n    <div style=\"display: block\" *ngFor=\"let chart of charts\">\n        <canvas baseChart\n                [datasets]=\"chart.barChartData\"\n                [labels]=\"chart.barChartLabels\"\n                [options]=\"chart.barChartOptions\"\n                [legend]=\"chart.barChartLegend\"\n                [chartType]=\"chart.barChartType\"\n                (chartHover)=\"chartHovered($event)\"\n                (chartClick)=\"chartClicked($event)\">\n        </canvas>\n    </div>\n    <button class=\"charts-comp__btn\"></button>\n</div>\n"
 
 /***/ }),
 
@@ -485,8 +490,13 @@ var ChartsService = (function () {
     * Get all offers method
     * @returns {Observable<Response>}
     */
-    ChartsService.prototype.getAllCharts = function () {
-        return this._http.get('/charts').map(function (data) { return data.json(); });
+    ChartsService.prototype.getAllCharts = function (next) {
+        if (!next) {
+            return this._http.get('/charts').map(function (data) { return data.json(); });
+        }
+        else {
+            return this._http.get('/charts?' + next).map(function (data) { return data.json(); });
+        }
     };
     return ChartsService;
 }());

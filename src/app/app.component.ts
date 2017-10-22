@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ChartsService } from './app.service';
 
 @Component({
@@ -11,27 +11,30 @@ export class AppComponent {
 	//Get all charts
 	public charts = [];
 
-  constructor( private _allCharts: ChartsService ) {
-  	  	this.charts = [{barChartLabels:['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-  	  					barChartType:'bar',
-  	  					barChartLegend:true,
-  	  					barChartData:[
-  		    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-  		    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-  		  ]}, {barChartLabels:['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-  	  					barChartType:'bar',
-  	  					barChartLegend:true,
-  	  					barChartData:[
-  		    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-  		    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-  		  ]}]
-  }
+  //Next chunk of data params
+  public next: any;
+
+  public timer:any;
+
+  constructor( private _allCharts: ChartsService ) {}
 
   ngOnInit() {
     this._allCharts.getAllCharts().subscribe( data => {
-      console.log('hello');
       console.log(data);
+      this.charts = data['data'];
+      this.next = data['next'];
     });
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+      const number =  window.scrollY;
+      if (this.next && number > 50) {
+        this._allCharts.getAllCharts(this.next).subscribe( data => {
+          this.charts = this.charts.concat(data['data']);
+          this.next = data['next'];
+        });
+      }
   }
 
   // events

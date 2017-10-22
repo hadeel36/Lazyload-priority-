@@ -13,7 +13,11 @@ export class ChartsService {
     * Get all offers method
     * @returns {Observable<Response>}
     */
-    getAllCharts(): Observable<Response> {
-        return this._http.get('/charts').map(data => data.json());
+    getAllCharts(next?: number): Observable<Response> {
+    	if (!next) {
+    		return this._http.get('/charts').map(data => data.json());
+    	} else {
+    		return this._http.get('/charts?'+ next).map(data => data.json());
+    	}
     }
 }
