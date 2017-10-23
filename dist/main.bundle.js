@@ -62,7 +62,6 @@ var AppComponent = (function () {
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         this._allCharts.getAllCharts().subscribe(function (data) {
-            console.log(data);
             _this.charts = data['data'];
             _this.next = data['next'];
         });
@@ -487,7 +486,7 @@ var ChartsService = (function () {
         this._http = _http;
     }
     /**
-    * Get all offers method
+    * Get all charts method
     * @returns {Observable<Response>}
     */
     ChartsService.prototype.getAllCharts = function (next) {
