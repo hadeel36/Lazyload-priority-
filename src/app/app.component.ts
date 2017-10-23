@@ -14,13 +14,10 @@ export class AppComponent {
   //Next chunk of data params
   public next: any;
 
-  public timer:any;
-
   constructor( private _allCharts: ChartsService ) {}
 
   ngOnInit() {
     this._allCharts.getAllCharts().subscribe( data => {
-      console.log(data);
       this.charts = data['data'];
       this.next = data['next'];
     });

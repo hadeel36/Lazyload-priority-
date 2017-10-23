@@ -10,7 +10,7 @@ export class ChartsService {
     constructor(private _http:Http) {}
 
     /**
-    * Get all offers method
+    * Get all charts method
     * @returns {Observable<Response>}
     */
     getAllCharts(next?: number): Observable<Response> {
