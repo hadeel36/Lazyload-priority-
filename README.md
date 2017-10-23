@@ -7,3 +7,6 @@ Run `npm install` to install the dependncies.<br />
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.<br />
 Then run `node server.js` to start server.<br />
 Navigate to `http://localhost:5000/`.<br />
+
+## Heroku URL
+https://lazyload-priority.herokuapp.com/
