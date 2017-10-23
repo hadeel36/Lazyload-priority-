@@ -26,7 +26,7 @@ export class AppComponent {
   @HostListener('window:scroll', [])
   onWindowScroll() {
       const number =  window.scrollY;
-      if (this.next && number > 50) {
+      if (this.next!==null && number > 10) {
         this._allCharts.getAllCharts(this.next).subscribe( data => {
           this.charts = this.charts.concat(data['data']);
           this.next = data['next'];

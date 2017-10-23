@@ -29,16 +29,15 @@ app.get('/charts?:next?', function(req, res) {
 
   	  var chartsData = JSON.parse(data);
   	  var dataRes = {"data": [], "next": 0};
-
+      var priority = next ? next : chartsData[0].priority;
   	  for (var i=0; i < chartsData.length; i++) {
-  	  	var priority = next ? next : chartsData[0].priority;
-  	  	console.log(priority);
+        console.log(priority)
   	  	if (chartsData[i].priority === priority) {
   	  		dataRes.data.push(chartsData[i]);
   	  	} else if (chartsData[chartsData.length-1].priority === priority) {
   	  		dataRes.next = null;
-  	  	} else {
-  	  		dataRes.next = chartsData[i].priority;
+  	  	} else if (chartsData[i].priority > priority){
+  	  		dataRes.next = chartsData[i].priority;;
   	  		break;
   	  	}
   	  }
