@@ -69,8 +69,7 @@ var AppComponent = (function () {
     AppComponent.prototype.onWindowScroll = function () {
         var _this = this;
         var number = window.scrollY;
-        if (this.next !== null && number > 60) {
-            console.log('hello');
+        if (this.next !== null && number > 10) {
             this._allCharts.getAllCharts(this.next).subscribe(function (data) {
                 _this.charts = _this.charts.concat(data['data']);
                 _this.next = data['next'];

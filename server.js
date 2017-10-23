@@ -31,7 +31,6 @@ app.get('/charts?:next?', function(req, res) {
   	  var dataRes = {"data": [], "next": 0};
       var priority = next ? next : chartsData[0].priority;
   	  for (var i=0; i < chartsData.length; i++) {
-        console.log(priority)
   	  	if (chartsData[i].priority === priority) {
   	  		dataRes.data.push(chartsData[i]);
   	  	} else if (chartsData[chartsData.length-1].priority === priority) {
