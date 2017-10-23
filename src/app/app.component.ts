@@ -25,12 +25,16 @@ export class AppComponent {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
+    var lastNexts = [];
       const number =  window.scrollY;
-      if (this.next!==null && number > 10) {
-        this._allCharts.getAllCharts(this.next).subscribe( data => {
-          this.charts = this.charts.concat(data['data']);
-          this.next = data['next'];
-        });
+      if (lastNexts.indexOf(this.next) < 0 && this.next!==null) {
+        if (this.next!==null && number > 10) {
+          lastNexts.push(this.next);
+          this._allCharts.getAllCharts(this.next).subscribe( data => {
+            this.charts = this.charts.concat(data['data']);
+            this.next = data['next'];
+          });
+        }
       }
   }
 

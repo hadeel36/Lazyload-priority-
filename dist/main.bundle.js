@@ -68,12 +68,16 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.onWindowScroll = function () {
         var _this = this;
+        var lastNexts = [];
         var number = window.scrollY;
-        if (this.next !== null && number > 10) {
-            this._allCharts.getAllCharts(this.next).subscribe(function (data) {
-                _this.charts = _this.charts.concat(data['data']);
-                _this.next = data['next'];
-            });
+        if (lastNexts.indexOf(this.next) < 0 && this.next !== null) {
+            if (this.next !== null && number > 10) {
+                lastNexts.push(this.next);
+                this._allCharts.getAllCharts(this.next).subscribe(function (data) {
+                    _this.charts = _this.charts.concat(data['data']);
+                    _this.next = data['next'];
+                });
+            }
         }
     };
     // events
